@@ -2,11 +2,11 @@
 
 | Student's name | SCIPER |
 | -------------- | ------ |
-| | |
+| Robin Herberich | 355741 |
 | | |
 | | |
 
-[Milestone 1](#milestone-1) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
+[Milestone 1](#milestone-1-20th-march-5pm) • [Milestone 2](#milestone-2-17th-april-5pm) • [Milestone 3](#milestone-3-29th-may-5pm)
 
 ## Milestone 1 (20th March, 5pm)
 
@@ -50,10 +50,4 @@ Please, fill the following sections about your project.
 ## Milestone 3 (29th May, 5pm)
 
 **80% of the final grade**
-
-
-## Late policy
-
-- < 24h: 80% of the grade for the milestone
-- < 48h: 70% of the grade for the milestone
 
