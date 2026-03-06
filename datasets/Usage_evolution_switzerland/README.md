@@ -1,0 +1,4 @@
+- The numbers are all in 1000 metric tonns.
+- Two rows per year:
+    - First row is the usage of raw milk.
+    - Second row is the weight of the final product.
