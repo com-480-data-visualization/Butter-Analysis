@@ -26,6 +26,9 @@ Sources:
 - https://opendata.swiss/en/dataset/rinder-entwicklung-nach-kantonen (Evolution of the number of cows by canton)
 - https://opendata.swiss/en/dataset/marktzahlen-milch-undmilchprodukte-4 (Producer prices)
 - https://opendata.swiss/en/dataset/marktzahlen-milch-undmilchprodukte-9 (Consumer prices)
+- https://opendata.swiss/en/dataset/rinder-herdengrossen-der-tierhaltungen-nach-nutzungsart
+- https://opendata.swiss/en/dataset/rinder-herdengrossen-der-tierhaltungen
+- https://opendata.swiss/de/dataset/menuch_lebensmittelkonsum/resource/ca928bd5-95c4-47d5-8c95-8e1d62dd6e22
 
 > Find a dataset (or multiple) that you will explore. Assess the quality of the data it contains and how much preprocessing / data-cleaning it will require before tackling visualization. We recommend using a standard dataset as this course is not about scraping nor data processing.
 >
