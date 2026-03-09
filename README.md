@@ -17,22 +17,59 @@ Please, fill the following sections about your project.
 
 *(max. 2000 characters per section)*
 
-### Dataset
+### Datasets
 
-Sources:
-- https://opendata.swiss/en/dataset/rinder-namen-der-weiblichen-rinder
-- https://opendata.swiss/en/dataset/verwertung-der-gemolkenen-kuhmilch4 (Evolution of the usage of milk (milk products))
-- https://opendata.swiss/en/dataset/rinder-entwicklung-nach-nutzungsarten (Evolution of the number of cows by usage)
-- https://opendata.swiss/en/dataset/rinder-entwicklung-nach-kantonen (Evolution of the number of cows by canton)
-- https://opendata.swiss/en/dataset/marktzahlen-milch-undmilchprodukte-4 (Producer prices)
-- https://opendata.swiss/en/dataset/marktzahlen-milch-undmilchprodukte-9 (Consumer prices)
-- https://opendata.swiss/en/dataset/rinder-herdengrossen-der-tierhaltungen-nach-nutzungsart
-- https://opendata.swiss/en/dataset/rinder-herdengrossen-der-tierhaltungen
-- https://opendata.swiss/de/dataset/menuch_lebensmittelkonsum/resource/ca928bd5-95c4-47d5-8c95-8e1d62dd6e22
 
-> Find a dataset (or multiple) that you will explore. Assess the quality of the data it contains and how much preprocessing / data-cleaning it will require before tackling visualization. We recommend using a standard dataset as this course is not about scraping nor data processing.
->
-> Hint: some good pointers for finding quality publicly available datasets ([Google dataset search](https://datasetsearch.research.google.com/), [Kaggle](https://www.kaggle.com/datasets), [OpenSwissData](https://opendata.swiss/en/), [SNAP](https://snap.stanford.edu/data/) and [FiveThirtyEight](https://data.fivethirtyeight.com/)).
+#### 1. Top names of female cows by language region (Switzerland)
+**Link :** https://opendata.swiss/en/dataset/rinder-namen-der-weiblichen-rinder
+
+**Format :** CSV
+
+**Quality :** Perfect, no special cleaning or processing necessary.
+
+#### 2. Evolution of the usage of milk in Switzerland (1999-2024)
+**Link :** https://opendata.swiss/en/dataset/verwertung-der-gemolkenen-kuhmilch4
+
+**Format :** XLS, not machine readable formatting, manual conversion to CSV necessary.
+
+**Quality :** Okay, no special cleaning or processing necessary except for removing 1999 since it does not have the same categories.
+
+#### 3. Evolution of the number of cows by usage (Switzerland)
+**Link :** https://opendata.swiss/en/dataset/rinder-entwicklung-nach-nutzungsarten
+
+CSV, no special cleaning or processing necessary.
+
+#### 4. Evolution of the number of cows by canton  (Switzerland)
+**Link :** https://opendata.swiss/en/dataset/rinder-entwicklung-nach-kantonen
+
+CSV, no special cleaning or processing necessary.
+
+#### 5. Monthly milk producer prices (Switzerland)
+**Link :** https://opendata.swiss/en/dataset/marktzahlen-milch-undmilchprodukte-4
+
+SPARQL backend, needs to be queried, returns a CSV, no special cleaning or processing necessary.
+
+#### 6. Monthly consumer prices for different dairy products (Switzerland)
+**Link :** https://opendata.swiss/en/dataset/marktzahlen-milch-undmilchprodukte-9
+
+SPARQL backend, needs to be queried, returns a CSV, large dataset that may need light cleanup, generally good data.
+
+#### 7. Monthly average heard size by usage (Switzerland) 
+**Link :** https://opendata.swiss/en/dataset/rinder-herdengrossen-der-tierhaltungen-nach-nutzungsart
+
+CSV, no special cleaning or processing necessary.
+
+#### 8. Monthly average heard size and number of holdings (Switzerland) 
+**Link :** https://opendata.swiss/en/dataset/rinder-herdengrossen-der-tierhaltungen
+
+CSV no special cleaning or processing necessary.
+
+#### 9. MenuCH study, dairy consumption in switzerland (2015) 
+**Link :** https://opendata.swiss/de/dataset/menuch_lebensmittelkonsum/resource/ca928bd5-95c4-47d5-8c95-8e1d62dd6e22
+
+XLS, not machine readable formatting, manual conversion to CSV necessary.
+
+We chose a wide array of smaller datasets regarding Swiss dairy production, consumption, and prices, enabling us to combine diverse sources to generate new insights and a comprehensive picture of the industry.
 
 ### Problematic
 

@@ -11,7 +11,7 @@ dataset_path = os.path.join(base_dir, 'datasets', 'dairy_consumer_prices', 'dair
 # Load the dataset
 df = pd.read_csv(dataset_path)
 
-product = 'Mozzarella'  # Change this to the desired product category
+product = 'Crème entière'  # Change this to the desired product category
 
 # Filter for products
 product_df = df[df['product_category'] == product]
