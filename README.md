@@ -84,11 +84,21 @@ We chose a wide array of smaller datasets regarding Swiss dairy production, cons
 
 ### Related work
 
+[Swissmilk article](https://www.swissmilk.ch/fr/producteurs-de-lait/marche/acteurs-et-structure-du-marche/producteurs-de-lait/) about dairy in Switzerland
 
-> - What others have already done with the data?
-> - Why is your approach original?
-> - What source of inspiration do you take? Visualizations that you found on other websites or magazines (might be unrelated to your data).
-> - In case you are using a dataset that you have already explored in another context (ML or ADA course, semester project...), you are required to share the report of that work to outline the differences with the submission for this class.
+#### Why is our approach original?
+Most websites and visualizations about this topic are a bit old, use static charts and only highlight single metrics. 
+- Rather than viewing production, pricing, and consumption separately, we will correlate these diverse datasets to reveal hidden relationships. For example, we can visually link the evolution of herd sizes and milk usage with the growing gap between producer and consumer prices, while also weaving in cultural elements like regional cow names to keep the narrative engaging
+- We will create dynamic visualizations that let the user explore the data by themselves, which is a lot more fun than static charts that only provide a narrow way of interacting with the topic.
+#### Inspiration
+1. Interactive canton map for showcasing cantonal data (number of cows per canton)
+
+    <img src="readme_images/interactive_canton_map.png" width="500">
+    
+    Source: https://www.watson.ch/schweiz/arbeitswelt/438746096-du-willst-wissen-wer-in-deinem-kanton-als-reich-gilt-wir-zeigen-es-dir
+
+    We can extend this with a timeline slider to show how the data evolved over time.
+
 
 ## Milestone 2 (17th April, 5pm)
 
