@@ -8,6 +8,9 @@
 
 [Milestone 1](#milestone-1-20th-march-5pm) • [Milestone 2](#milestone-2-17th-april-5pm) • [Milestone 3](#milestone-3-29th-may-5pm)
 
+TODO
+- dataset 1 ought to be removed from candidacy, as I don't think we can use its data
+
 ## Milestone 1 (20th March, 5pm)
 
 **10% of the final grade**
@@ -72,10 +75,6 @@ XLS, not machine readable formatting, manual conversion to CSV necessary.
 We chose a wide array of smaller datasets regarding Swiss dairy production, consumption, and prices, enabling us to combine diverse sources to generate new insights and a comprehensive picture of the industry.
 
 ### Problematic
-
-> Frame the general topic of your visualization and the main axis that you want to develop.
-> - What am I trying to show with my visualization?
-> - Think of an overview for the project, your motivation, and the target audience.
 
 In this project we wish to underline how economic divides between consumers and producers have impacted the types and quantities of diary products produced and consumed by region.
 
