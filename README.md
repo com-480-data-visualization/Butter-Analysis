@@ -77,6 +77,10 @@ We chose a wide array of smaller datasets regarding Swiss dairy production, cons
 > - What am I trying to show with my visualization?
 > - Think of an overview for the project, your motivation, and the target audience.
 
+In this project we wish to underline how economic divides between consumers and producers have impacted the types and quantities of diary products produced and consumed by region.
+
+Or in simpler terms, we'd like to show how much the past XX years of economical difficulties have changed the logistical and productive landscape of swiss dairy. This would mostly be of interest to businesses, especially suppliers and producers who might be able to cross-reference the project with arable land/available cattle to guess at longer term trends, and optimize present logistical networks. We have decided to throw ourselves into this venue of questioning as big picture analysis of an antire sector is fairly rare, and as such our presentation could be both rather instructive, and hard to find elsewhere.
+
 ### Exploratory Data Analysis
 
 > Pre-processing of the data set you chose
