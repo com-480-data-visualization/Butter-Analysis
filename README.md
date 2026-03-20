@@ -52,12 +52,17 @@ CSV, no special cleaning or processing necessary.
 #### 7. Monthly average heard size and number of holdings (Switzerland) 
 **Link :** https://opendata.swiss/en/dataset/rinder-herdengrossen-der-tierhaltungen
 
-CSV no special cleaning or processing necessary.
+CSV, no special cleaning or processing necessary.
 
 #### 8. MenuCH study, dairy consumption in switzerland (2015) 
 **Link :** https://opendata.swiss/de/dataset/menuch_lebensmittelkonsum/resource/ca928bd5-95c4-47d5-8c95-8e1d62dd6e22
 
 XLS, not machine readable formatting, manual conversion to CSV necessary.
+
+#### 9. Top names of female cows by language region (Switzerland)
+**Link :** https://opendata.swiss/en/dataset/rinder-namen-der-weiblichen-rinder
+
+CSV, no special cleaning or processing necessary.
 
 We chose a wide array of smaller datasets regarding Swiss dairy production, consumption, and prices, enabling us to combine diverse sources to generate new insights and a comprehensive picture of the industry.
 
