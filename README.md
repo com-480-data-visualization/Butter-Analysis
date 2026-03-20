@@ -80,7 +80,7 @@ We chose a wide array of smaller datasets regarding Swiss dairy production, cons
     
     This would mostly be of interest to businesses, especially suppliers and producers who might be able to cross-reference the project with arable land/available cattle to guess at longer term trends. By visualizing this past quarter-century of data, we create a baseline to understand the current limits of Swiss agricultural capacity.
 
-### Exploratory Data Analysis
+#### Exploratory Data Analysis
 
 Our EDA focused on cleaning heterogeneous datasets and extracting preliminary statistics to validate our core problematic: the structural and economic shift in the Swiss dairy industry. 
 
@@ -89,9 +89,17 @@ We standardized 9 distinct datasets (CSV and Excel). A major task involved trans
 
 **Key Insights & Statistics:**
 1. **Geographic Specialization:** Cattle distribution is highly concentrated. The top 5 cantons (led by Bern with an average of ~304k cattle) account for 54.0% of the national herd. This spatial inequality strongly motivates our planned interactive map visualization.
+<br>
+    <img src="readme_images/geographic_distribution.png" width="500">
+
 2. **Farm Consolidation:** We observed a stark structural shift over the last two decades. While the total number of agricultural holdings is steadily declining, the median herd size per farm is inversely increasing. This confirms our hypothesis: shrinking margins force smaller farms to close, driving a scale-up in surviving operations.
+<br>
+        <img src="readme_images/farm_consolidation.png" width="500">
+
 3. **Economic Divergence:** Initial comparisons of price indices reveal the anticipated decoupling between producers and consumers. Raw milk producer prices remain volatile and stagnant, while retail prices for processed dairy have climbed, visually highlighting the economic squeeze on farmers.
+
 4. **Strategic Usage Shifts:** Time-series analysis of milk allocation shows a strategic pivot. Liquid milk consumption is declining, offset by a steady increase in raw milk allocated to high-margin products like cheese (from ~167M kg to >200M kg).
+
 5. **Cultural Narrative:** We pre-processed regional cow names (e.g., Fiona, Bella) to serve as an engaging, relatable entry point for the user, bridging hard economic data with Swiss agricultural culture.
 
 ### Related work
