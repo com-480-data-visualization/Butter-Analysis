@@ -77,8 +77,6 @@ We chose a wide array of smaller datasets regarding Swiss dairy production, cons
 
 ### Exploratory Data Analysis
 
-### Exploratory Data Analysis
-
 Our EDA focused on cleaning heterogeneous datasets and extracting preliminary statistics to validate our core problematic: the structural and economic shift in the Swiss dairy industry. 
 
 **Data Pre-processing:** 
