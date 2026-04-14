@@ -4,10 +4,11 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   root: 'src',
   build: {
-    outDir: 'dist',
+    outDir: '../docs',
     emptyOutDir: true,
   },
   plugins: [
     tailwindcss(),
   ],
+  base: '/Butter-Analysis/',
 })
