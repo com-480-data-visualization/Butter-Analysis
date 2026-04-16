@@ -49,8 +49,9 @@ const sankey_generator = sankey()
         return d.depth;
     })
     .nodeWidth(15)            
-    .nodePadding(15)          
-    .nodeSort(null);
+    .nodePadding(15)     
+    .nodeSort(null)  
+
 
 const svg = d3.select("#sankey-chart");
 const linkGroup = svg.append("g").attr("class", "links");
@@ -171,12 +172,13 @@ d3.csv(MilkUsageData).then(data => {
                         }
                         currentTotalFinal += finalVal;
                     } else {
-                        // Edge case: Raw milk exists, but 0 final product (100% loss)
-                        const lossNodeName = `Mass Loss & Byproducts`;
-                        if (!nodesMap.has(lossNodeName)) {
-                            nodesMap.set(lossNodeName, { name: lossNodeName, baseCategory: "Mass Loss & Byproducts" });
+                        if(finalVal > 0 || cleanCat == "Other or evaporation"){
+                            const lossNodeName = `Mass Loss & Byproducts`;
+                            if (!nodesMap.has(lossNodeName)) {
+                                nodesMap.set(lossNodeName, { name: lossNodeName, baseCategory: "Mass Loss & Byproducts" });
+                            }
+                            links.push({ source: rawNodeName, target: lossNodeName, value: rawVal });
                         }
-                        links.push({ source: rawNodeName, target: lossNodeName, value: rawVal });
                     }
                 }
             });
