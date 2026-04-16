@@ -121,7 +121,7 @@ Most websites and visualizations about this topic are a bit old, use static char
 
     We can extend this with a timeline slider to show how the data evolved over time.
 
-2. Sankey diagramm to visualize milk usage (from raw milk to finished products)
+2. Sankey diagram to visualize milk usage (from raw milk to finished products)
 
     <img src="readme_images/sankey.png" width="500">
 
