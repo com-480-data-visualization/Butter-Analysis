@@ -134,7 +134,7 @@ Most websites and visualizations about this topic are a bit old, use static char
 
 Link to the project website: https://com-480-data-visualization.github.io/Butter-Analysis/
 
-PDF containing the project goal: 
+PDF containing the project goal: [Document](M2ProjectGoal.pdf)
 
 
 ## Milestone 3 (29th May, 5pm)
