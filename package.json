@@ -13,8 +13,10 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",
+    "@types/topojson": "^3.2.6",
     "d3": "^7.9.0",
     "d3-sankey": "^0.12.3",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.2.1",
+    "topojson": "^3.0.2"
   }
 }
