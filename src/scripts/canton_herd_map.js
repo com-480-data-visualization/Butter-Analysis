@@ -242,7 +242,6 @@ mapSvg
  */
 const projection = d3
   .geoIdentity()
-  .reflectY(true)
   .fitExtent(
     [
       [margin.map, margin.map],
