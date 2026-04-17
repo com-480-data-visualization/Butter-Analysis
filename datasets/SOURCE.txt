@@ -1,1 +1,0 @@
-Cantonal boundaries: topo/ch-cantons.json from https://github.com/greenore/swiss-maps (see LICENSE-GEODATA in that repository; derived from Swiss Federal mapping data).
