@@ -132,6 +132,9 @@ Most websites and visualizations about this topic are a bit old, use static char
 
 **10% of the final grade**
 
+Link to the project website: https://com-480-data-visualization.github.io/Butter-Analysis/
+PDF containing the project goal: 
+
 
 ## Milestone 3 (29th May, 5pm)
 
