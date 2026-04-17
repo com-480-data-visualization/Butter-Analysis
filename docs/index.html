@@ -5,10 +5,100 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>com-480-project-template</title>
-    <script type="module" crossorigin src="/assets/index-B3EyWD_h.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-C60bhVX2.css">
+    <script type="module" crossorigin src="/Butter-Analysis/assets/index-Di3nZnMp.js"></script>
+    <link rel="stylesheet" crossorigin href="/Butter-Analysis/assets/index-DNAdEy6Y.css">
   </head>
-  <body>
-    <div id="app"></div>
+  <body class="bg-neutral-50 flex flex-col min-h-dvh">
+
+    <nav class="sticky top-0 w-full pt-2 pb-3 z-10 flex items-center justify-between px-8 border-b-2 bg-yellow-200 transition-transform duration-300">
+      <div class="text-lg font-black bg-neutral-50 px-4 py-1 rounded-full border-3 border-black uppercase tracking-tighter shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+        Dairy explorer
+      </div>
+
+      <div id="nav-menu" class="hidden md:flex flex-col md:flex-row items-start md:items-center md:gap-3 font-bold absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent p-6 md:p-0 border-b-4 border-black md:border-none shadow-xl md:shadow-none z-50">        
+        <a href="#" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Home</a>
+        <a href="#pasture" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Pasture</a>
+        <a href="#price_explorer" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Price explorer</a>
+        <a href="#dairy_uses" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Dairy production</a>
+      </div>
+
+      <div class="md:hidden">
+        <button id="hamburger-button" class="p-2 rounded-md border-2 border-black">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <main class="relative flex flex-col flex-1 items-center justify-center bg-[url(/assets/vecteezy_cow-seamless-pattern-cow-print-cow-spots-for-fashion-print_10533605.jpg)] bg-repeat bg-size-[800px] md:px-18 px-2 pt-4 pb-4 z-1 w-full">
+      <section class="mb-8 w-full scroll-mt-24 max-w-400 bg-orange-50 p-6 rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+        <h1 class="text-2xl font-bold mb-4">Welcome to the Dairy Explorer (WIP TITLE)</h1>
+        <p class="text-gray-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe obcaecati aspernatur odio ratione delectus voluptas, recusandae doloremque illum, at inventore in? Ipsum soluta, nesciunt sapiente incidunt sequi totam sint! Deleniti!</p>
+      </section>
+
+      <section class="mb-8 w-full scroll-mt-24 max-w-400 bg-orange-50 p-6 rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+        <h2 id="pasture-heading" class="text-xl font-bold mb-3">Explore the pasture</h2>
+        <h3 class="text-lg font-semibold text-stone-800 mb-2">Cattle headcount by canton</h3>
+        <p class="text-gray-700 mb-4">
+          How many cattle each Swiss canton reports, year by year. The numbers are the official Identitas AG series on
+          <a class="underline font-medium text-stone-800 hover:text-black" href="https://opendata.swiss/en/dataset/rinder-entwicklung-nach-kantonen" target="_blank" rel="noopener noreferrer">opendata.swiss — Rinder: Entwicklung nach Kantonen</a>;
+          we add up the monthly rows so you get one total per canton per calendar year.
+          The map and the ranking on the right always match the year on the slider. Click a canton or a bar to highlight the same place in both views; click the grey map background to clear.
+        </p>
+        <div id="canton-herd-root"></div>
+      </section>
+
+      <section id="price_explorer" class="mb-8 w-full scroll-mt-24 max-w-400  bg-orange-50 p-6 rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+        <h2 class="text-xl font-bold mb-4">Price and production explorer</h2>
+        <div class="flex items-center justify-center">
+          <img src="/Butter-Analysis/assets/price_explorer-BBAeGDXE.jpg" alt="Price and production explorer screenshot" class="w-3/5 rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+        </div>
+      </section>
+
+      <section class="mb-8 w-full scroll-mt-24 max-w-400  bg-orange-50 bg-opacity-90 p-6 rounded-lg shadow-lg">
+        <h2 class="text-xl font-bold mb-4">Discover the Dairy</h2>
+        <p class="text-gray-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe obcaecati aspernatur odio ratione delectus voluptas, recusandae doloremque illum, at inventore in? Ipsum soluta, nesciunt sapiente incidunt sequi totam sint! Deleniti!</p>
+      </section>
+
+      <section class="mb-8 w-full scroll-mt-24 max-w-400 bg-orange-50 p-6 rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+        <h2 class="text-xl font-bold mb-4">Get Involved</h2>
+        <p class=" text-gray-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe obcaecati aspernatur odio ratione delectus voluptas, recusandae doloremque illum, at inventore in? Ipsum soluta, nesciunt sapiente incidunt sequi totam sint! Deleniti!</p>
+      </section>
+
+      <section id="dairy_uses" class="mb-8 w-full scroll-mt-24 max-w-400  bg-orange-50 bg-opacity-90 p-6 rounded-lg shadow-lg">
+        <h2 class="text-xl font-bold mb-4">Raw milk uses and dairy production</h2>
+        <p class="text-gray-700">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.  
+
+          Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.  
+        </p>
+        <div id="sankey_raw_milk_usage"></div>
+      </section>
+
+      
+
+      <!--
+        <div id="app"></div>
+        <script type="module" src="/scripts/main.js"></script>
+      -->
+
+
+    </main> 
+
+    <footer class="w-full bg-yellow-200 mt-0 px-8 py-4 border-t-2 border-black">
+      <div class="max-w-4xl mx-auto flex flex-col md:items-start items-center gap-2">
+        <div class="w-full flex flex-col md:flex-row items-center justify-between gap-2">
+          <p class="text-sm text-gray-700">COM-480 Project, 2026</p>
+          <p class="text-sm text-gray-700"> Created by Asia Montico, Antoine Bachmann, Robin Herberich </p>
+        </div>
+          <a href="https://www.vecteezy.com/free-vector/cow"
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="text-xs text-gray-700 hover:text-yellow-600 transition-colors">
+            Cow Vectors by Vecteezy
+          </a>
+        </div>
+    </footer>
+
   </body>
 </html>
