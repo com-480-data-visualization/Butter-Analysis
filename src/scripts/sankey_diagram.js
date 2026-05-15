@@ -11,12 +11,12 @@ document.querySelector('#sankey_raw_milk_usage').innerHTML = `
     </div>
     <div class="flex items-center justify-center p-2.5 mb-4 bg-slate-50 border border-slate-200 rounded-2xl shadow-sm max-w-2xl mx-auto gap-5">
         
-        <label for="time-slider" class="font-bold text-amber-800 whitespace-nowrap">
-            Year: <span id="year-label" class="text-amber-800 tabular-nums">2010</span>
+        <label for="time-slider" class="font-bold text-red-700 whitespace-nowrap">
+            Year: <span id="year-label" class="text-red-700 tabular-nums">2010</span>
         </label>
         
         <input type="range" id="time-slider" min="2000" max="2024" step="1" value="2010" 
-               class="w-full h-2 bg-slate-300 rounded-lg appearance-none cursor-pointer accent-amber-800 hover:accent-amber-900 transition-all">
+               class="w-full h-2 bg-slate-300 rounded-lg appearance-none cursor-pointer accent-red-700 hover:accent-red-800 transition-all">
                
     </div>
 `;

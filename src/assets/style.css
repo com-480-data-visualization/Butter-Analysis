@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.section-card {
+  @apply mb-8 w-full scroll-mt-24 max-w-400 bg-orange-50 md:px-20 md:py-8 p-6 rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)];
+}
