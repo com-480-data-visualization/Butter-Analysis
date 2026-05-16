@@ -20,7 +20,8 @@
 
       <div id="nav-menu" class="hidden md:flex flex-col md:flex-row items-start md:items-center md:gap-3 font-bold absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent p-6 md:p-0 border-b-4 border-black md:border-none shadow-xl md:shadow-none z-50">        
         <a href="#" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Home</a>
-        <a href="#pasture" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Pasture</a>
+        <a href="#adopt_section" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Adopt a cow</a>
+        <a href="#pasture_section" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Pasture</a>
         <a href="#price_explorer" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Price explorer</a>
         <a href="#dairy_uses" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Dairy production</a>
       </div>
@@ -40,8 +41,13 @@
         <p class="text-gray-900">Over the past 25 years, the Swiss dairy industry has undergone profound structural and economic transformations. The Swiss Dairy Explorer is an interactive journey through a quarter-century of agricultural data, visualizing the delicate balance between milk production, consumption, and the financial pressures facing local farmers. By correlating diverse government datasets, this project goes beyond static numbers to reveal the hidden relationships shaping the landscape of Swiss agriculture today.</p>
       </section>
 
-      <section class="section-card">
-        <h2 id="pasture-heading" class="text-xl font-bold mb-3">Explore the pasture</h2>
+      <section id="adopt_section" class="section-card">
+        <div id="adopt_a_cow"></div>
+        <script type="module" src="/scripts/cow_adoption.js"></script>
+      </section>
+
+      <section id="pasture_section" class="section-card">
+        <h2 class="text-xl font-bold mb-3">Explore the pasture</h2>
         <h3 class="text-lg font-semibold text-stone-800 mb-2">Cattle headcount by canton</h3>
         <p class="text-gray-900 mb-4">
           How many cattle each Swiss canton reports, year by year. The numbers are the official Identitas AG series on
@@ -60,16 +66,9 @@
         </div>
       </section>
 
-      <section class="section-card">
-        <h2 class="text-xl font-bold mb-4">Get Involved</h2>
-        <p class=" text-gray-900">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe obcaecati aspernatur odio ratione delectus voluptas, recusandae doloremque illum, at inventore in? Ipsum soluta, nesciunt sapiente incidunt sequi totam sint! Deleniti!</p>
-      </section>
-
       <section id="dairy_uses" class="section-card">
         <h2 class="text-xl font-bold mb-4">Raw milk uses and dairy production</h2>
-        <p class="text-gray-900">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.  
-
-          Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.  
+        <p class="text-gray-900">Where exactly does all that milk go once it leaves the farm? The journey from pasture to plate is complex. The Sankey diagram below traces raw milk as it is divided, processed, and allocated across a diverse array of finished dairy products. By visualizing these streams, we can see exactly which goods dominate the Swiss dairy market and how raw resources are utilized.  
         </p>
         <div id="sankey_raw_milk_usage"></div>
         <script type="module" src="/scripts/sankey_diagram.js"></script>
