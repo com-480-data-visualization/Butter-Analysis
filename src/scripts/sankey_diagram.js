@@ -1,6 +1,7 @@
 import '../assets/style.css'
 import * as d3 from 'd3';
 import { sankey, sankeyLinkHorizontal, sankeyJustify, sankeyLeft} from 'd3-sankey';
+import { Tooltip } from './tooltip.js';
 import MilkUsageData from '../../datasets/milk_usage_evolution_switzerland/Evolution_of_the_usage_of_milk_switzerland_2024-2000.csv?url';
 import colors from 'tailwindcss/colors';
 
@@ -11,14 +12,14 @@ document.querySelector('#sankey_raw_milk_usage').innerHTML = `
         <div class="w-full max-w-5xl mx-auto px-20 pt-5 pb-2.5">
             <svg id="sankey-chart" viewBox="0 0 800 500" class="w-full h-auto"></svg>
         </div>
-        <div class="flex items-center justify-center p-2.5 mb-4 bg-slate-50 border border-slate-200 rounded-2xl shadow-sm max-w-2xl mx-auto gap-5">
+        <div class="flex items-center justify-center p-2.5 mb-4 bg-orange-50 border border-black border-2 rounded-2xl shadow-sm max-w-2xl mx-auto gap-5">
             
-            <label for="time-slider" class="font-bold text-red-700 whitespace-nowrap">
-                Year: <span id="year-label" class="text-red-700 tabular-nums">2010</span>
+            <label for="time-slider" class="font-bold  whitespace-nowrap">
+                Year: <span id="year-label" class=" tabular-nums">2010</span>
             </label>
             
             <input type="range" id="time-slider" min="2000" max="2024" step="1" value="2010" 
-                class="w-full h-2 bg-slate-300 rounded-lg appearance-none cursor-pointer accent-red-700 hover:accent-red-800 transition-all">
+                class="w-full h-2 bg-slate-300 rounded-lg appearance-none cursor-pointer accent-red-500 hover:accent-red-800 transition-all">
                 
         </div>
     </div>
@@ -60,9 +61,41 @@ const svg = d3.select("#sankey-chart");
 const linkGroup = svg.append("g").attr("class", "links");
 const nodeGroup = svg.append("g").attr("class", "nodes");
 
-const tooltip = d3.select("body").append("div")
-    .attr("class", "absolute hidden bg-gray-800 text-white text-xs px-2 py-1 rounded shadow-lg pointer-events-none z-50 transition-opacity duration-200")
-    .style("opacity", 0);
+const sankeyWrapper = document.getElementById("sankey-chart-wrapper");
+const tooltip = new Tooltip({ root: sankeyWrapper });
+
+function getTooltipRect() {
+    const el = tooltip.element;
+    if (!el) return { width: 0, height: 0 };
+    const wasHidden = el.classList.contains("hidden");
+    const prevVisibility = el.style.visibility;
+    if (wasHidden) {
+        el.style.visibility = "hidden";
+        el.classList.remove("hidden");
+    }
+    const rect = el.getBoundingClientRect();
+    if (wasHidden) {
+        el.classList.add("hidden");
+        el.style.visibility = prevVisibility;
+    }
+    return rect;
+}
+
+function positionTooltip(event) {
+    if (!sankeyWrapper) return;
+    const bounds = sankeyWrapper.getBoundingClientRect();
+    const { width: tooltipWidth } = getTooltipRect();
+    const padding = 12;
+    const maxLeft = bounds.width - padding;
+    let left = event.clientX - bounds.left + padding;
+    if (left + tooltipWidth > bounds.width) {
+        left = event.clientX - bounds.left - tooltipWidth - padding;
+    }
+    if (left < padding) left = padding;
+    if (left > maxLeft) left = maxLeft;
+    const top = event.clientY - bounds.top + padding;
+    tooltip.setPosition(left, top);
+}
 
 // Custom Path Generator for Tapered Flows
 function taperedLinkPath(d) {
@@ -332,21 +365,18 @@ d3.csv(MilkUsageData).then(data => {
                         return 0; 
                     });
 
-                g.on("mouseover", (event, d) => {
-                    tooltip.interrupt();
-                    tooltip.classed("hidden", false) 
-                        .style("opacity", 1)
-                        .html(`<strong>${d.name}</strong><br/>Amount: ${Math.round(d.value * 100) / 100}`);
+                g.on("mouseenter", (event, d) => {
+                    const html = `<strong>${d.name}</strong><br/>Amount: ${Math.round(d.value * 100) / 100}`;
+                    tooltip.hide();
+                    tooltip.setHtml(html);
+                    positionTooltip(event);
+                    tooltip.show();
                 })
                 .on("mousemove", (event) => {
-                    tooltip.style("left", (event.pageX + 15) + "px")
-                           .style("top", (event.pageY - 15) + "px");
+                    positionTooltip(event);
                 })
-                .on("mouseout", () => {
-                    tooltip.style("opacity", 0)
-                        .transition().duration(200).on("end", function() {
-                            d3.select(this).classed("hidden", true);
-                        });
+                .on("mouseleave", () => {
+                    tooltip.hide();
                 });
 
                 return g.call(e => e.transition().duration(750).style("opacity", 1));

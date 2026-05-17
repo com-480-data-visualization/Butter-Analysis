@@ -3,6 +3,7 @@ import * as d3 from 'd3'
 import { feature as topoFeature } from 'topojson-client'
 import cattleCsvRaw from '../../datasets/cattle-canton.csv?raw'
 import topology from '../../datasets/geo/ch-cantons.topo.json'
+import { Tooltip } from './tooltip.js'
 
 /**
  * Swiss canton: BFS id (TopoJSON feature.id) → two-letter code (CSV columns).
@@ -162,16 +163,11 @@ const yearLabel = d3.select('#canton-year-label')
 const yearSlider = d3.select('#canton-year-slider')
 const legendEl = d3.select('#canton-map-legend')
 
-const tooltip = d3
-  .select(root)
-  .append('div')
-  .attr('role', 'status')
-  .attr('aria-live', 'polite')
-  .style('position', 'absolute')
-  .style('left', '-9999px')
-  .style('width', '1px')
-  .style('height', '1px')
-  .style('overflow', 'hidden')
+const tooltipRoot = root.querySelector('.relative') ?? root
+const tooltip = new Tooltip({
+  root: tooltipRoot,
+  attributes: { role: 'status', 'aria-live': 'polite' },
+})
 
 const { rows, headerLine } = parseCattleCantonCsv(cattleCsvRaw)
 const byYear = aggregateHeadcountByYear(rows)
@@ -333,33 +329,15 @@ function render() {
       const code = codeForFeature(d)
       if (!code) return
       const v = totals[code] ?? 0
-      tooltip.text(`${code}: ${d3.format(',.0f')(v)} head (annual sum)`)
+      tooltip.showText(`${code}: ${d3.format(',.0f')(v)} head (annual sum)`)
     })
     .on('mousemove', (event) => {
-      const [bx, by] = d3.pointer(event, root)
-      tooltip
-        .style('left', `${Math.min(root.clientWidth - 160, bx + 12)}px`)
-        .style('top', `${by + 12}px`)
-        .style('width', 'auto')
-        .style('height', 'auto')
-        .style('overflow', 'visible')
-        .style('padding', '6px 10px')
-        .style('border-radius', '6px')
-        .style('background', 'rgba(15,23,42,0.92)')
-        .style('color', '#fff')
-        .style('font-size', '12px')
-        .style('pointer-events', 'none')
-        .style('z-index', '50')
-        .style('position', 'absolute')
+      const [bx, by] = d3.pointer(event, tooltipRoot)
+      const maxX = tooltipRoot.clientWidth - 160
+      tooltip.setPosition(Math.min(maxX, bx + 12), by + 12)
     })
     .on('mouseout', () => {
-      tooltip
-        .text('')
-        .style('left', '-9999px')
-        .style('width', '1px')
-        .style('height', '1px')
-        .style('overflow', 'hidden')
-        .style('padding', '0')
+      tooltip.setText('').hide()
     })
 
   const sorted = CANTON_CODES.map((code) => ({ code, value: totals[code] ?? 0 })).sort((a, b) => b.value - a.value)

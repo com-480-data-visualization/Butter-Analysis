@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import * as htmlToImage from 'html-to-image';
 import DairyConsumerPrices from '../../datasets/dairy_consumer_prices/dairy_products_consumer_prices.csv?url';
 import ProducerMilkPrices from '../../datasets/price_index/price_index_milk_market.csv?url';
+import { Tooltip } from './tooltip.js';
 
 // 1. Set up the HTML UI
 document.querySelector('#price_explorer').innerHTML = `
@@ -36,7 +37,7 @@ document.querySelector('#price_explorer').innerHTML = `
     <!-- WRAPPER: Contains both chart and legend for the UI and the export -->
     <div id="export-wrapper" class="relative w-full bg-white border-2 border-black rounded-lg overflow-hidden flex flex-col">
       <div id="chart-container" class="relative w-full overflow-hidden">
-        <div id="tooltip" class="absolute hidden bg-yellow-200 border-2 border-black p-2 rounded text-sm font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] pointer-events-none transition-all z-10"></div>
+          <div id="tooltip" class="tooltip-custom hidden"></div>
       </div>
       
       <!-- LIVE LEGEND -->
@@ -317,7 +318,8 @@ svg.append("text").attr("x", 0).attr("y", -15).text("Price / kg (CHF)").attr("fo
 svg.append("text").attr("x", width).attr("y", -15).attr("text-anchor", "end").text("Producer price / kg (CHF)").attr("font-weight", "bold").attr("font-size", "12px");
 
 const chartContainer = document.getElementById("chart-container");
-const tooltip = d3.select("#tooltip");
+const tooltipElement = document.getElementById("tooltip");
+const tooltip = new Tooltip({ root: chartContainer, element: tooltipElement });
 const formatDate = d3.timeFormat("%B %Y");
 const formatPrice = d3.format(".2f");
 
@@ -326,16 +328,16 @@ function positionTooltip(event) {
   const bounds = chartContainer.getBoundingClientRect();
   const left = event.clientX - bounds.left + 15;
   const top = event.clientY - bounds.top - 40;
-  tooltip.style("left", left + "px").style("top", top + "px");
+  tooltip.setPosition(left, top);
 }
 
 function showTooltip(html, event) {
-  tooltip.style("display", "block").html(html);
   positionTooltip(event);
+  tooltip.showHtml(html);
 }
 
 function hideTooltip() {
-  tooltip.style("display", "none");
+  tooltip.hide();
 }
 
 function drawChart(data) {
