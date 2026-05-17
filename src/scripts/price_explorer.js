@@ -1,5 +1,6 @@
 import '../assets/style.css'
 import * as d3 from 'd3';
+import * as htmlToImage from 'html-to-image';
 import DairyConsumerPrices from '../../datasets/dairy_consumer_prices/dairy_products_consumer_prices.csv?url';
 import ProducerMilkPrices from '../../datasets/price_index/price_index_milk_market.csv?url';
 
@@ -22,7 +23,7 @@ document.querySelector('#price_explorer').innerHTML = `
         <button id="clear-products" class="px-4 py-2 bg-white border-2 border-black rounded font-bold hover:bg-gray-200 transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
           Clear
         </button>
-        <button class="px-4 py-2 bg-white border-2 border-black rounded font-bold hover:bg-gray-200 transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center" aria-label="Export" title="Export">
+        <button id="export-png" class="px-4 py-2 bg-white border-2 border-black rounded font-bold hover:bg-gray-200 transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center" aria-label="Export" title="Export">
           <svg aria-hidden="true" viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 3v12" />
             <path d="M8 7l4-4 4 4" />
@@ -32,8 +33,14 @@ document.querySelector('#price_explorer').innerHTML = `
       </div>
     </div>
 
-    <div id="chart-container" class="relative w-full overflow-hidden bg-white border-2 border-black rounded-lg">
-      <div id="tooltip" class="absolute hidden bg-yellow-200 border-2 border-black p-2 rounded text-sm font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] pointer-events-none transition-all z-10"></div>
+    <!-- WRAPPER: Contains both chart and legend for the UI and the export -->
+    <div id="export-wrapper" class="relative w-full bg-white border-2 border-black rounded-lg overflow-hidden flex flex-col">
+      <div id="chart-container" class="relative w-full overflow-hidden">
+        <div id="tooltip" class="absolute hidden bg-yellow-200 border-2 border-black p-2 rounded text-sm font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] pointer-events-none transition-all z-10"></div>
+      </div>
+      
+      <!-- LIVE LEGEND -->
+      <div id="live-legend" class="flex flex-wrap justify-center gap-x-6 gap-y-3 p-4 bg-gray-50 border-t-2 border-black text-sm font-bold empty:hidden"></div>
     </div>
 
     <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-2">
@@ -43,8 +50,7 @@ document.querySelector('#price_explorer').innerHTML = `
           <div class="absolute w-full h-2 bg-gray-300 rounded pointer-events-none"></div>
           <div id="slider-track" class="absolute h-2 bg-red-500 rounded pointer-events-none"></div>
           
-          <!-- Removed hardcoded min, max, and value parameters -->
-          <input type="range" id="year-slider-min" value="2000" min="2000" max="2026" class="absolute w-full  appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-red-500 [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-black [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer z-10">
+          <input type="range" id="year-slider-min" value="2000" min="2000" max="2026" class="absolute w-full appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-red-500 [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-black [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer z-10">
           <input type="range" id="year-slider-max" value="2026" min="2000" max="2026" class="absolute w-full appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-red-500 [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-black [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer z-20">
         </div>
         <span id="year-label-text" class="min-w-max">2000 - 2026</span>
@@ -90,7 +96,6 @@ Promise.all([
 
     const BASE_CHF_PRICE = 0.7104; 
     producerData.forEach(row => {
-        // Find the key safely to bypass invisible BOM characters
         const monthKey = Object.keys(row).find(k => k.includes('month'));
         if (!monthKey || !row[monthKey]) return;
         
@@ -108,7 +113,6 @@ Promise.all([
     // --- Process Consumer Prices ---
     const conventionalProductsSet = new Set();
     pricesData.forEach(row => {
-        // Find the key safely to bypass invisible BOM characters
         const monthKey = Object.keys(row).find(k => k.includes('month'));
         if (!monthKey || !row[monthKey]) return; 
         
@@ -168,7 +172,6 @@ Promise.all([
     // Setup Slider State
     const allYearsInDataset = Array.from(new Set(chartData.map(d => d.year)));
     
-    // NEW: Save the absolute boundaries so the CSS math doesn't break!
     const absoluteMinYear = d3.min(allYearsInDataset);
     const absoluteMaxYear = d3.max(allYearsInDataset);
     
@@ -189,7 +192,6 @@ Promise.all([
         const minVal = parseInt(minSlider.value);
         const maxVal = parseInt(maxSlider.value);
         
-        // FIXED: Use the absolute boundaries for the percentage math
         const total = absoluteMaxYear - absoluteMinYear;
         const minPercent = ((minVal - absoluteMinYear) / total) * 100;
         const maxPercent = ((maxVal - absoluteMinYear) / total) * 100;
@@ -208,7 +210,6 @@ Promise.all([
             minSlider.value = val;
         }
         state.minYear = val;
-        console.log("Min slider changed:", val, "State minYear:", state.minYear);
         updateSliderVisuals();
         drawChart(chartData);
     });
@@ -220,7 +221,6 @@ Promise.all([
             maxSlider.value = val;
         }
         state.maxYear = val;
-        console.log("Max slider changed:", val, "State maxYear:", state.maxYear);
         updateSliderVisuals();
         drawChart(chartData);
     });
@@ -251,6 +251,39 @@ Promise.all([
       drawChart(chartData);
     });
 
+    // --- EXPORT LOGIC ---
+    document.getElementById('export-png').addEventListener('click', () => {
+      // Export the wrapper that contains BOTH the chart and the live legend
+      const exportNode = document.getElementById('export-wrapper');
+      if (!exportNode) return;
+
+      htmlToImage.toPng(exportNode, { 
+        backgroundColor: '#ffffff',
+        pixelRatio: 2,
+        style: {
+          border: 'none',
+          borderRadius: '0px',
+          boxShadow: 'none'
+        },
+        onclone: (documentClone) => {
+          // Hide tooltip during export so it doesn't get stuck in the picture
+          const clonedTooltip = documentClone.querySelector('#tooltip');
+          if (clonedTooltip) clonedTooltip.style.display = 'none';
+        }
+      })
+      .then((dataUrl) => {
+        const link = document.createElement('a');
+        link.download = 'dairy_price_chart.png';
+        link.href = dataUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch((error) => {
+        console.error('Oops, something went wrong with the export!', error);
+      });
+    });
+
     // 2. Build the buttons and draw the initial chart state
     buildProductButtons(chartData);
     drawChart(chartData);
@@ -260,12 +293,15 @@ Promise.all([
 
 // --- CHART RENDERING LOGIC ---
 const margin = { top: 40, right: 60, bottom: 40, left: 60 };
-const width = 800 - margin.left - margin.right;
-const height = 400 - margin.top - margin.bottom;
+const width = 1000 - margin.left - margin.right;
+const height = 500 - margin.top - margin.bottom;
 
 const svg = d3.select("#chart-container")
   .append("svg")
+  .attr("width", "100%")
+  .attr("height", "100%")
   .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+  .attr("preserveAspectRatio", "xMidYMid meet")
   .append("g")
   .attr("transform", `translate(${margin.left},${margin.top})`);
 
@@ -315,13 +351,11 @@ function drawChart(data) {
   let minPrice = Infinity;
 
   filteredData.forEach(d => {
-      // Check standard consumer prices
       state.activeProducts.forEach(prod => {
           if (d.exactPrices[prod] !== undefined && d.exactPrices[prod] !== null) {
               if (d.exactPrices[prod] > maxPrice) maxPrice = d.exactPrices[prod];
               if (d.exactPrices[prod] < minPrice) minPrice = d.exactPrices[prod];
           }
-          // Check Bio consumer prices
           if (state.isBio) {
               const cat = exactToCategory[prod];
               if (cat && d.bioCatPrices[cat] !== undefined && d.bioCatPrices[cat] !== null) {
@@ -332,11 +366,9 @@ function drawChart(data) {
       });
   });
   
-  // Fallback if no lines are active
   if (minPrice === Infinity) minPrice = 0;
   if (maxPrice === -Infinity) maxPrice = 1;
 
-  // Add a 5% visual padding to the top and bottom of the lines so they don't touch the borders
   const pricePadding = (maxPrice - minPrice) * 0.05;
   yPrice.domain([Math.max(0, minPrice - pricePadding), maxPrice + pricePadding]);
 
@@ -380,7 +412,7 @@ function drawChart(data) {
   Array.from(state.activeProducts).forEach(prod => {
       lineData.push({
       id: `${prod}-standard`,
-      label: `${prod} (Standard)`,
+      label: `${prod}`,
       color: colorScale(prod),
       type: 'standard',
       yScale: yPrice,
@@ -415,6 +447,41 @@ function drawChart(data) {
     .merge(prodLine).attr("d", d => producerLineGenerator(d.values));
   prodLine.exit().remove();
 
+  // --- UPDATE LIVE UI LEGEND ---
+  const legendContainer = document.getElementById('live-legend');
+  if (legendContainer) {
+    let legendHTML = '';
+    Array.from(state.activeProducts).forEach(prod => {
+      const color = colorScale(prod);
+      legendHTML += `
+        <div class="flex items-center gap-2">
+          <span class="w-6 h-0 inline-block border-t-[3px]" style="border-color: ${color}; border-style: solid;"></span>
+          <span>${prod}</span>
+        </div>
+      `;
+      const cat = exactToCategory[prod];
+      if (state.isBio && cat) {
+        legendHTML += `
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-0 inline-block border-t-[3px]" style="border-color: ${color}; border-style: dashed;"></span>
+            <span>${cat} (Bio)</span>
+          </div>
+        `;
+      }
+    });
+
+    if (state.showProducer) {
+      legendHTML += `
+        <div class="flex items-center gap-2">
+          <span class="w-6 h-0 inline-block border-t-[3px]" style="border-color: #374151; border-style: dotted;"></span>
+          <span>Producer milk price</span>
+        </div>
+      `;
+    }
+    legendContainer.innerHTML = legendHTML;
+  }
+
+  // --- TOOLTIP HOVER DATA ---
   const hoverSeries = lineData.concat(
     producerLineData.map(series => ({
       id: series.id,

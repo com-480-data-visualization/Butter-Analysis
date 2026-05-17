@@ -16,6 +16,7 @@
     "@types/topojson": "^3.2.6",
     "d3": "^7.9.0",
     "d3-sankey": "^0.12.3",
+    "html-to-image": "^1.11.13",
     "tailwindcss": "^4.2.1",
     "topojson": "^3.0.2"
   }
