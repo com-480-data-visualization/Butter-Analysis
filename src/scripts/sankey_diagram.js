@@ -6,18 +6,21 @@ import colors from 'tailwindcss/colors';
 
 // Set up the HTML structure for the Sankey diagram and controls
 document.querySelector('#sankey_raw_milk_usage').innerHTML = `
-    <div class="w-full max-w-5xl mx-auto px-20 pt-5 pb-2.5">
-        <svg id="sankey-chart" viewBox="0 0 800 500" class="w-full h-auto"></svg>
-    </div>
-    <div class="flex items-center justify-center p-2.5 mb-4 bg-slate-50 border border-slate-200 rounded-2xl shadow-sm max-w-2xl mx-auto gap-5">
-        
-        <label for="time-slider" class="font-bold text-red-700 whitespace-nowrap">
-            Year: <span id="year-label" class="text-red-700 tabular-nums">2010</span>
-        </label>
-        
-        <input type="range" id="time-slider" min="2000" max="2024" step="1" value="2010" 
-               class="w-full h-2 bg-slate-300 rounded-lg appearance-none cursor-pointer accent-red-700 hover:accent-red-800 transition-all">
-               
+    <div id="sankey-chart-wrapper" class="relative w-full bg-white border-2 border-black rounded-lg overflow-hidden flex flex-col">
+
+        <div class="w-full max-w-5xl mx-auto px-20 pt-5 pb-2.5">
+            <svg id="sankey-chart" viewBox="0 0 800 500" class="w-full h-auto"></svg>
+        </div>
+        <div class="flex items-center justify-center p-2.5 mb-4 bg-slate-50 border border-slate-200 rounded-2xl shadow-sm max-w-2xl mx-auto gap-5">
+            
+            <label for="time-slider" class="font-bold text-red-700 whitespace-nowrap">
+                Year: <span id="year-label" class="text-red-700 tabular-nums">2010</span>
+            </label>
+            
+            <input type="range" id="time-slider" min="2000" max="2024" step="1" value="2010" 
+                class="w-full h-2 bg-slate-300 rounded-lg appearance-none cursor-pointer accent-red-700 hover:accent-red-800 transition-all">
+                
+        </div>
     </div>
 `;
 
