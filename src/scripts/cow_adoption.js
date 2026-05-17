@@ -94,6 +94,16 @@ fetch(CowNames)
                     She shares this name with <b>${cowNumber}</b> other cows, making it the <b>#${cowRank}</b> most popular name in the <b>${cowOwnerRegion}</b> part of Switzerland!
                 </p>
             `;
+
+            window.dispatchEvent(
+                new CustomEvent('cow:selected', {
+                    detail: {
+                        name: cowName,
+                        canton: selectedCanton.name,
+                        region: cowOwnerRegion,
+                    },
+                })
+            );
         });
     })
     .catch(error => {

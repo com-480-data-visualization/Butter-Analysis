@@ -171,8 +171,9 @@ const tooltip = new Tooltip({
 
 const { rows, headerLine } = parseCattleCantonCsv(cattleCsvRaw)
 const byYear = aggregateHeadcountByYear(rows)
+const LAST_COMPLETE_YEAR = 2025
 const years = Array.from(byYear.keys())
-  .filter((y) => Number.isFinite(y))
+  .filter((y) => Number.isFinite(y) && y <= LAST_COMPLETE_YEAR)
   .sort((a, b) => a - b)
 
 if (rows.length === 0 || years.length === 0 || !headerLine?.includes('Year')) {

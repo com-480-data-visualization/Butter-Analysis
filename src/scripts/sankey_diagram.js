@@ -64,6 +64,61 @@ const nodeGroup = svg.append("g").attr("class", "nodes");
 const sankeyWrapper = document.getElementById("sankey-chart-wrapper");
 const tooltip = new Tooltip({ root: sankeyWrapper });
 
+const cowTextRoot = document.getElementById("sankey_cow_text");
+const AVERAGE_COW_MILK_KG = 7100;
+const formatKg = d3.format(",.0f");
+const cowTextState = {
+    name: "your cow",
+    year: null,
+    breakdown: null,
+};
+
+function formatCategoryLabel(cat) {
+    return cat.charAt(0).toUpperCase() + cat.slice(1).toLowerCase();
+}
+
+function formatBreakdownText(entries) {
+    const parts = entries.map((entry) => `<b>${formatKg(entry.kg)} kg</b> of <b>${entry.name}</b>`);
+    if (parts.length === 0) return "";
+    if (parts.length === 1) return parts[0];
+    if (parts.length === 2) return `${parts[0]} and ${parts[1]}`;
+    return `${parts.slice(0, -1).join(", ")}, and ${parts[parts.length - 1]}`;
+}
+
+function renderCowText() {
+    if (!cowTextRoot) return;
+    const name = cowTextState.name || "your cow";
+    const yearLabel = cowTextState.year ? `in ${cowTextState.year}` : "this year";
+
+    if (!cowTextState.breakdown || cowTextState.breakdown.length === 0) {
+        cowTextRoot.innerHTML = `
+            <p id="sankey_cow_text_p" class="text-gray-900 text-md leading-relaxed pt-5">
+                Pick a year on the slider to see how <b>${name}</b>'s milk would be split across dairy products ${yearLabel}.
+                <span class="block pt-2 text-xs text-gray-500">
+                    Source: <a href="https://www.agrarbericht.ch/fr/production/production-animale/production-laitiere" target="_blank" rel="noopener noreferrer" class="underline">Agrarbericht - Production laitiere</a>
+                </span>
+            </p>
+        `;
+        return;
+    }
+
+    const breakdownText = formatBreakdownText(cowTextState.breakdown);
+    cowTextRoot.innerHTML = `
+        <p id="sankey_cow_text_p" class="text-gray-900 text-md leading-relaxed pt-5">
+            Did you know that the average swiss cow produces about <b>${formatKg(AVERAGE_COW_MILK_KG)} kg</b> of milk per year ? If <b>${name}</b> had the same productivity and her milk followed the final product split in the Sankey chart, her milk would have been used to make roughly ${breakdownText}.
+            <span class="block pt-2 text-xs text-gray-500">
+                Source: <a href="https://www.agrarbericht.ch/fr/production/production-animale/production-laitiere" target="_blank" rel="noopener noreferrer" class="underline">Agrarbericht - Production laitiere</a>
+            </span>
+        </p>
+    `;
+}
+
+window.addEventListener("cow:selected", (event) => {
+    const name = event && event.detail ? event.detail.name : null;
+    if (name) cowTextState.name = name;
+    renderCowText();
+});
+
 function getTooltipRect() {
     const el = tooltip.element;
     if (!el) return { width: 0, height: 0 };
@@ -150,6 +205,58 @@ d3.csv(MilkUsageData).then(data => {
         if (finalTotal > globalMaxVolume) globalMaxVolume = finalTotal;
     });
 
+    function updateCowTextFromYear(yearData, selectedYear) {
+        const yearValue = Number(selectedYear);
+        cowTextState.year = Number.isFinite(yearValue) ? yearValue : selectedYear;
+
+        if (!yearData || yearData.length === 0) {
+            cowTextState.breakdown = null;
+            renderCowText();
+            return;
+        }
+
+        const rawRow = yearData[0];
+        const finalRow = yearData[1];
+
+        // Calculate the total RAW MILK used, not the total final mass
+        const totalRaw = d3.sum(
+            categories.map((cat) => { const val = parseFloat(rawRow[cat]);
+                return Number.isFinite(val) && val > 0 ? val : 0;
+            })
+        );
+
+        if (!Number.isFinite(totalRaw) || totalRaw <= 0) {
+            cowTextState.breakdown = null;
+            renderCowText();
+            return;
+        }
+
+        const focusLabels = [
+            "Cheese",
+            "Milk for consumption",
+            "Butter",
+            "Yogurt and fresh milk products",
+        ];
+
+        cowTextState.breakdown = focusLabels
+            .map((label) => {
+                const key = categories.find((cat) => formatCategoryLabel(cat) === label);
+                if (!key) return null;
+
+                const finalValue = parseFloat(finalRow[key]);
+                if (!Number.isFinite(finalValue) || finalValue <= 0) return null;
+ 
+                 return {
+                name: label,
+                     // Correct Math: Cow's raw milk fraction * Country's final product weight
+                 kg: (finalValue / totalRaw) * AVERAGE_COW_MILK_KG,
+            };
+        })
+             .filter(Boolean);
+
+         renderCowText();
+     }
+
     function updateChart(selectedYear) {
         const yearData = dataByYear.get(selectedYear.toString());
         
@@ -168,7 +275,7 @@ d3.csv(MilkUsageData).then(data => {
             categories.forEach(cat => {
                 const rawVal = parseFloat(rawRow[cat]);
                 const finalVal = parseFloat(finalRow[cat]);
-                const cleanCat = cat.charAt(0).toUpperCase() + cat.slice(1).toLowerCase(); 
+                const cleanCat = formatCategoryLabel(cat); 
 
                 if (!isNaN(rawVal) && rawVal > 0) {
                     const rawNodeName = `${cleanCat} (Raw)`;
@@ -422,6 +529,8 @@ d3.csv(MilkUsageData).then(data => {
                     .remove());
             }
         );
+
+        updateCowTextFromYear(yearData, selectedYear);
     }
 
     function triggerUpdate() {
@@ -432,4 +541,5 @@ d3.csv(MilkUsageData).then(data => {
 
     d3.select("#time-slider").on("input", triggerUpdate);
     triggerUpdate();
+    renderCowText();
 });
