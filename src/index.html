@@ -22,7 +22,7 @@
         <a href="#" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Home</a>
         <a href="#adopt_section" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Adopt a cow</a>
         <a href="#pasture_section" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Pasture</a>
-        <a href="#price_explorer" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Price explorer</a>
+        <a href="#price_explorer_section" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Price explorer</a>
         <a href="#dairy_uses" class="block md:inline-block bg-neutral-50 px-4 py-2 rounded-lg text-xs border-2 border-black hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] m-1 md:m-0">Dairy production</a>
       </div>
 
@@ -59,11 +59,10 @@
         <script type="module" src="/scripts/canton_herd_map.js"></script>
       </section>
 
-      <section id="price_explorer" class="section-card">
+      <section id="price_explorer_section" class="section-card">
         <h2 class="text-xl font-bold mb-4">Price and production explorer</h2>
-        <div class="flex items-center justify-center">
-          <img src="/assets/price_explorer.jpg" alt="Price and production explorer screenshot" class="w-3/5 rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-        </div>
+        <div id="price_explorer"></div>
+        <script type="module" src="/scripts/price_explorer.js"></script>
       </section>
 
       <section id="dairy_uses" class="section-card">
