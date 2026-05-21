@@ -141,3 +141,22 @@ PDF containing the project goal: [Document](M2ProjectGoal.pdf)
 
 **80% of the final grade**
 
+Link to the project website: https://com-480-data-visualization.github.io/Butter-Analysis/
+
+PDF of the process book: [Document](ProcessBook.pdf)
+
+### Technical details
+
+The website is a static single-page application built with Vite and vanilla JavaScript. Visualizations are implemented with D3 (including `d3-sankey`), and the map layers use TopoJSON. Styling is handled with Tailwind CSS and a small custom stylesheet. Data files are stored as CSV/TopoJSON in `datasets/` and loaded client-side at runtime. The website is hosted as a github page, built through the CI from the main branch.
+
+**Run locally**
+1. Install dependencies: `npm install`
+2. Start the dev server: `npm run dev`
+3. Open the local URL printed in the terminal (typically http://localhost:5173)
+
+### Intended usage
+
+This site is meant for exploratory analysis of Swiss dairy data. Use the interactive map and charts to compare cantons and time ranges, then read the accompanying annotations to understand the economic and structural trends.
+
+
+
